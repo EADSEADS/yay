@@ -1,0 +1,102 @@
+class Iterator
+    {
+    public:
+        Iterator()
+        {
+            position = NULL;
+        }
+        Iterator(node* node):position(node){}
+
+        key k()
+        {
+            return position->k;
+        }
+
+        info i()
+        {
+            return position->i;
+        }
+
+        node* next()
+        {
+            return position->next;
+        }
+        node* prev()
+        {
+            return position->prev;
+        }
+
+        Iterator& operator++()
+        {
+            if(position)
+            {
+                position = position->next;
+            }
+            return *this;
+        }
+           Iterator& operator--()
+        {
+            if(position)
+            {
+                position = position->prev;
+            }
+            return *this;
+        }
+
+        Iterator operator++(int)
+        {
+            Iterator iterator = *this;
+            ++*this;
+            return iterator;
+        }
+          Iterator operator--(int)
+        {
+            Iterator iterator = *this;
+            --*this;
+            return iterator;
+        }
+
+        bool operator==(const Iterator& iterator)
+        {
+            return (position == iterator.position);
+        }
+        bool operator!=(const Iterator& iterator){
+			return position!=iterator.position;
+		}
+
+		node& operator*()const{
+			return *position;
+		}
+
+		Iterator& operator+=(int x){
+			for(int i=0; i<x ;i++){
+				position = position->next;
+			}
+			return *this;
+		}
+
+		Iterator& operator-=(int x){
+			for(int i=0; i<x ;i++){
+				position = position->prev;
+			}
+			return *this;
+		}
+    }
+
+    private:
+        node* position;
+    };
+
+
+     Iterator begin() const
+    {
+        return Iterator(head);
+    }
+    Iterator end() const
+    {
+        return Iterator(head->prev);
+    }
+
+
+
+};
